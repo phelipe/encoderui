@@ -1,0 +1,29 @@
+package pages
+
+import (
+	"fmt"
+
+	"github.com/phelipe/encoderui/internal/app"
+	"github.com/rivo/tview"
+)
+
+type TUI struct {
+	app *app.Aplication
+}
+
+func TUIRun() {
+	const pageCount = 2
+	app := tview.NewApplication()
+
+	//components
+	header := tview.NewBox().SetBorder(true).SetTitle("Header")
+	inputBox := tview.NewBox().SetBorder(true).SetTitle("Input value")
+	outputBox := tview.NewBox().SetBorder(true).SetTitle("output value")
+
+	//layout
+	layout := tview.NewFlex().AddItem(header, 15, 0, false)
+
+	if err := app.SetRoot(pages, true).SetFocus(pages).Run(); err != nil {
+		panic(err)
+	}
+}

@@ -1,14 +1,14 @@
 package app
 
-import "github.com/phelipe/gcode/internal/encoders"
+import "github.com/phelipe/encoderui/internal/encoders"
 
-type App struct {
+type Aplication struct {
 	encoderList    map[string]Encoder
 	currentEncoder Encoder
 }
 
-func New() *App {
-	return &App{
+func New() *Aplication {
+	return &Aplication{
 		encoderList: map[string]Encoder{
 			"base64": encoders.Base64{},
 		},
@@ -16,7 +16,7 @@ func New() *App {
 	}
 }
 
-func (app *App) SetEncoder(name string) bool {
+func (app *Aplication) SetEncoder(name string) bool {
 	if data, exist := app.encoderList[name]; exist {
 		app.currentEncoder = data
 		return true
