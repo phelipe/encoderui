@@ -1,7 +1,8 @@
 package main
 
-import "github.com/phelipe/encoderui/internal/ui/pages"
+import "github.com/phelipe/encoderui/internal/tui"
 
 func main() {
-	pages.TUIRun()
+	tui := tui.NewTUI()
+	tui.CreatePage()
 }
