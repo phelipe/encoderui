@@ -7,24 +7,31 @@ import (
 
 type TUI struct {
 	//use cases
-	app *app.Aplication
+	useCase *app.Application
 
-	// interation
-	inputPanel  *tview.TextArea
-	outputPanel *tview.TextView
-	selector    *tview.DropDown
+	// app
+	app *tview.Application
+
+	// interation components
+	inputPanel      *tview.TextArea
+	outputPanel     *tview.TextArea
+	encoderSelector *tview.DropDown
 
 	//state
 	encode bool
 
 	//pages
+	mainPage *tview.Flex
 }
 
-func NewTUI() *TUI {
+func NewTUI(app *app.Application) *TUI {
 	return &TUI{
-		app:         app.New(),
-		inputPanel:  tview.NewTextArea(),
-		outputPanel: tview.NewTextView(),
-		selector:    tview.NewDropDown(),
+		useCase: app,
+
+		app:             tview.NewApplication(),
+		inputPanel:      tview.NewTextArea(),
+		outputPanel:     tview.NewTextArea(),
+		encoderSelector: tview.NewDropDown(),
+		mainPage:        tview.NewFlex(),
 	}
 }

@@ -19,18 +19,18 @@ func (tui *TUI) createConfigBarLayout() *tview.Flex {
 
 	keys := make([]string, 0)
 
-	for k, _ := range tui.app.EncoderList {
+	for k, _ := range tui.useCase.EncoderList {
 		keys = append(keys, k)
 	}
 
-	tui.selector.
+	tui.encoderSelector.
 		SetLabel("algorithm  \n\n ").
 		SetOptions(keys, nil).
 		SetCurrentOption(0)
 
 	configBar := tview.NewFlex().
 		AddItem(tabText, 0, 1, false).
-		AddItem(tui.selector, 0, 1, false)
+		AddItem(tui.encoderSelector, 0, 1, false)
 
 	configBar.SetBorder(true)
 
@@ -38,6 +38,7 @@ func (tui *TUI) createConfigBarLayout() *tview.Flex {
 }
 
 func (tui *TUI) createContentLayout() *tview.Flex {
+	tui.outputPanel.SetDisabled(true)
 	content := tview.NewFlex().
 		AddItem(tui.inputPanel, -1, 1, false).
 		AddItem(tui.outputPanel, -1, 1, false)
@@ -50,14 +51,18 @@ func (tui *TUI) createContentLayout() *tview.Flex {
 
 func (tui *TUI) CreatePage() {
 
-	app := tview.NewApplication()
-
-	page := tview.NewFlex().SetDirection(tview.FlexRow).
+	tui.mainPage.SetDirection(tview.FlexRow).
 		AddItem(tui.createHeaderBarLayout(), 3, 0, false).
 		AddItem(tui.createConfigBarLayout(), 3, 0, false).
 		AddItem(tui.createContentLayout(), 0, 1, false)
 
-	if err := app.SetRoot(page, true).EnableMouse(true).Run(); err != nil {
-		panic(err)
+	tui.app.SetRoot(tui.mainPage, true).EnableMouse(true)
+}
+
+func (tui *TUI) Run() error {
+
+	if err := tui.app.Run(); err != nil {
+		return err
 	}
+	return nil
 }
